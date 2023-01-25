@@ -1,0 +1,114 @@
+{
+  "tests": [
+    {
+      "name": "ch0 tests",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest -k \"ch0\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "ch1 tests",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest -k \"ch1\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "ch2 tests",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest -k \"ch2\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "ch3 tests",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest -k \"ch3\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "ch4 tests",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest -k \"ch4\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "ch5 tests",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest -k \"ch5\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "ch6 tests",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest -k \"ch6\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "ch7 tests",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest -k \"ch7\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "ch8 tests",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest -k \"ch8\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "ch9 tests",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest -k \"ch9\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "ch10 tests",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest -k \"ch10\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    }
+  ]
+}
