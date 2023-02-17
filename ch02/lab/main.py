@@ -52,24 +52,26 @@ while 1:
     screen2 = pygame.display.set_mode()
 
     sidessequence = [3, 4, 6, 20, 100, 360]
-    possiblethickness = [0, 2, 10, 50]
-    bgcolor = [random.randrange(0,255), random.randrange(0,255), random.randrange(0,255)]
+    possiblethickness = [0, 1, 2]
+    bgcolor = [random.randrange(0,100), random.randrange(0,100), random.randrange(0,100)]
     screen2.fill(bgcolor)
     for num_sides in sidessequence:
         points = []
-        color = [random.randrange(0,255), random.randrange(0,255), random.randrange(0,255)]
-        side_length = random.randrange(500,1000)
+        xpos = random.randrange(100, 1000)
+        ypos = random.randrange(100, 200)
+        color = [random.randrange(100,255), random.randrange(100,255), random.randrange(100,255)]
+        side_length = random.randrange(500,1000) / num_sides
         thickness = random.choice(possiblethickness)
-        xpos = random.randrange(100, 500)
-        ypos = random.randrange(100, 500)
-        angle = 360/num_sides
-        print(angle)
-        radians = math.radians(angle)
-        print(radians)
-        for _ in range(num_sides):
-            x = xpos + side_length * math.cos(radians)
-            y = ypos + side_length * math.sin(radians)
-            points.append([x,y])
+        intangle = 360/num_sides
+        shiftangle = random.randrange(0, 45)
+        for side in range(num_sides):
+            angle = side * intangle + shiftangle
+            print(angle)
+            radians = math.radians(angle)
+            print(radians)
+            xpos += side_length * math.cos(radians)
+            ypos += side_length * math.sin(radians)
+            points.append([xpos,ypos])
         pygame.draw.polygon(screen2, color, points, thickness)
         print(points)
         pygame.display.flip()
