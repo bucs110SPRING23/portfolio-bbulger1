@@ -66,14 +66,11 @@ while 1:
         shiftangle = random.randrange(0, 45)
         for side in range(num_sides):
             angle = side * intangle + shiftangle
-            print(angle)
             radians = math.radians(angle)
-            print(radians)
             xpos += side_length * math.cos(radians)
             ypos += side_length * math.sin(radians)
             points.append([xpos,ypos])
         pygame.draw.polygon(screen2, color, points, thickness)
-        print(points)
         pygame.display.flip()
         pygame.time.wait(2000)
         screen2.fill(bgcolor)
