@@ -57,7 +57,7 @@ while 1:
     screen2.fill(bgcolor)
     for num_sides in sidessequence:
         points = []
-        xpos = random.randrange(100, 1000)
+        xpos = random.randrange(200, 1000)
         ypos = random.randrange(100, 200)
         color = [random.randrange(100,255), random.randrange(100,255), random.randrange(100,255)]
         side_length = random.randrange(500,1000) / num_sides
