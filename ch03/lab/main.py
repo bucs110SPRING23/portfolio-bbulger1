@@ -1,26 +1,58 @@
-import turtle #1. import modules
+#PART A
+import pygame
 import random
+import math
 
-#Part A
-window = turtle.Screen() # 2.  Create a screen
-window.bgcolor('lightblue')
+pygame.init()
 
-michelangelo = turtle.Turtle() # 3.  Create two turtles
-leonardo = turtle.Turtle()
-michelangelo.color('orange')
-leonardo.color('blue')
-michelangelo.shape('turtle')
-leonardo.shape('turtle')
+while 1:
+    pygame.event.get()
 
-michelangelo.up() # 4. Pick up the pen so we don’t get lines
-leonardo.up()
-michelangelo.goto(-100,20)
-leonardo.goto(-100,-20)
+    screen = pygame.display.set_mode()
+    screensizevariable = pygame.display.get_window_size()
+    screenwidth = screensizevariable[0]
+    screenheight = screensizevariable[1]
+    screen.fill("dark blue")
 
-## 5. Your PART A code goes here
+    pygame.draw.circle(screen, "orange", [(screenwidth/2),(screenheight/2)], screenheight/2)
+    pygame.draw.circle(screen, "black", [(screenwidth/2),(screenheight/2)], screenheight/2, 1)
+    pygame.draw.line(screen, "black", [screenwidth/2, 0], [screenwidth/2, screenheight], 1)
+    pygame.draw.line(screen, "black", [(screenwidth/2) - (screenheight/2),(screenheight/2)], [(screenwidth/2) + (screenheight/2),(screenheight/2)], 1)
+    pygame.display.flip()
+    pygame.time.wait(1000)
 
+    score = 0
+    
+#PART B
+    for _ in range(10):
+        dartx = random.randrange(0,screenwidth)
+        darty = random.randrange(0,screenheight)
+        distancefromcenter = math.hypot(dartx - (screenwidth/2), darty - (screenheight/2))
+        isincircle = distancefromcenter <= (screenheight/2)
+        if isincircle:
+            for _ in range(3):
+                pygame.draw.circle(screen, "dark green", [dartx, darty], 4, 1)
+                pygame.display.flip()
+                pygame.time.wait(100)
+                pygame.draw.circle(screen, "black", [dartx, darty], 4, 1)
+                pygame.display.flip()
+                pygame.time.wait(100)
+                score += 1
+        else:
+            for _ in range(3):
+                pygame.draw.circle(screen, "red", [dartx, darty], 4, 1)
+                pygame.display.flip()
+                pygame.time.wait(100)
+                pygame.draw.circle(screen, "white", [dartx, darty], 4, 1)
+                pygame.display.flip()
+                pygame.time.wait(100)
+        pygame.time.wait(500)
 
-# PART B - complete part B here
+    # pygame.font.init
+    # text = pygame.font.SysFont("Helvetica", 32)
+    # message = "Final score: " + str(score) + " / 10"
+    # rendersurface = text.render(message, False, "white", "black")
+    # screen.blit(rendersurface, [64, 64])
+    # pygame.time.wait(4000)
 
-
-window.exitonclick()
+    break
