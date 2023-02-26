@@ -24,13 +24,37 @@ while 1:
     score = 0
     
 #PART B
+
+    dartxlist = []
+    dartylist = []
+
     for _ in range(10):
         dartx = random.randrange(0,screenwidth)
+        dartxlist.append(dartx)
         darty = random.randrange(0,screenheight)
+        dartylist.append
         distancefromcenter = math.hypot(dartx - (screenwidth/2), darty - (screenheight/2))
         isincircle = distancefromcenter <= (screenheight/2)
         if isincircle:
             for _ in range(3):
+                # screen.fill("green")
+                # pygame.draw.circle(screen, "orange", [(screenwidth/2),(screenheight/2)], screenheight/2)
+                # pygame.draw.circle(screen, "black", [(screenwidth/2),(screenheight/2)], screenheight/2, 1)
+                # pygame.draw.line(screen, "black", [screenwidth/2, 0], [screenwidth/2, screenheight], 1)
+                # pygame.draw.line(screen, "black", [(screenwidth/2) - (screenheight/2),(screenheight/2)], [(screenwidth/2) + (screenheight/2),(screenheight/2)], 1)
+                # for dart in range(len(dartxlist)):
+                # pygame.draw.circle(screen, "black", [dartxlist[dart], dartylist[dart]], 4, 1)
+                # pygame.display.flip()
+                # pygame.time.wait(100)
+                # screen.fill("dark blue")
+                # pygame.draw.circle(screen, "orange", [(screenwidth/2),(screenheight/2)], screenheight/2)
+                # pygame.draw.circle(screen, "black", [(screenwidth/2),(screenheight/2)], screenheight/2, 1)
+                # pygame.draw.line(screen, "black", [screenwidth/2, 0], [screenwidth/2, screenheight], 1)
+                # pygame.draw.line(screen, "black", [(screenwidth/2) - (screenheight/2),(screenheight/2)], [(screenwidth/2) + (screenheight/2),(screenheight/2)], 1)
+                # for dart in range(dartxlist):
+                # pygame.draw.circle(screen, "black", [dartxlist[dart], dartylist[dart]], 4, 1)
+                # pygame.display.flip()
+                # pygame.time.wait(100)
                 pygame.draw.circle(screen, "dark green", [dartx, darty], 4, 1)
                 pygame.display.flip()
                 pygame.time.wait(100)
@@ -40,7 +64,7 @@ while 1:
                 score += 1
         else:
             for _ in range(3):
-                pygame.draw.circle(screen, "red", [dartx, darty], 4, 1)
+                pygame.draw.circle(screen, "salmon", [dartx, darty], 4, 1)
                 pygame.display.flip()
                 pygame.time.wait(100)
                 pygame.draw.circle(screen, "white", [dartx, darty], 4, 1)
