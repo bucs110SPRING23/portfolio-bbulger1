@@ -14,9 +14,9 @@ while yea:
     sides = ["heads", "tails"]
     flip = random.choice(sides)
     if flip == "heads":
-        turtle1.left(90)
-    else:
         turtle1.right(90)
+    else:
+        turtle1.left(90)
     turtle1.forward(50)
     if abs(turtle1.xcor()) > 325 or abs(turtle1.ycor()) > 325:
         break
