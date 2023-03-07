@@ -330,6 +330,7 @@ while 1:
             else: 
                 winner = "It was a tie..."
                 winnercolor = "white"
+                winnerselection = 0
             messages = []
             adjustsize = hitfont.size(winner)
             msg = [hitfont, winnercolor, "black", [screensize[0]/2 - adjustsize[0]/2, screensize[1]/2 - adjustsize[1]/2], winner]
