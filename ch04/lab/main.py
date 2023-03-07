@@ -35,6 +35,9 @@ while 1:
     rounds = 0
     player1score = 0
     player2score = 0
+    buttons = []
+    selection = 0
+    drawselectcursor = False
     
     while 1:
         #Draw
@@ -49,11 +52,17 @@ while 1:
         #Hits
         for pos, playercolor in hits:
             pygame.draw.circle(screen, playercolor, pos, 2, 1)
+            pygame.draw.circle(screen, playercolor, pos, 4, 1)
+        #Buttons
+        for buttoncolor, buttonrect in buttons:
+            pygame.draw.rect(screen, buttoncolor, buttonrect)
         #Cursor
         if drawcursor:
             pygame.draw.circle(screen, dartcolor, cursorpos, 8, 1)
             pygame.draw.line(screen, dartcolor, [cursorpos[0] - 8,cursorpos[1]], [cursorpos[0] + 8,cursorpos[1]])
             pygame.draw.line(screen, dartcolor, [cursorpos[0],cursorpos[1] - 8], [cursorpos[0],cursorpos[1] + 8])
+        if drawselectcursor:
+            pygame.draw.circle(screen, "white", cursorpos, 4, 1)
         #Dart
         if drawdart:
             #calc stuff
@@ -83,7 +92,7 @@ while 1:
             pygame.draw.circle(screen, "black", dartpos3, 12, 1)
         #Text
         for currentfont, currentfontcolor, currentfontbg, fontcoords, message in messages:
-            fontsurface = currentfont.render(message, True, currentfontcolor, currentfontbg)
+            fontsurface = currentfont.render(message, False, currentfontcolor, currentfontbg)
             screen.blit(fontsurface, fontcoords)
 
         #Flip
@@ -129,13 +138,73 @@ while 1:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
                         if ready2start:
-                            phase = "player turn intro"
-                            player = 1
+                            phase = "bet"
                         else:
                             frame = targetframe + 180
-            
+        elif phase == "bet":
+            messages = []
+            buttons = []
+            drawselectcursor = True
+            cursorpos = pygame.mouse.get_pos()
+            if selection == 0:
+                adjustsize = gamefont.size("Predict which player will win!")
+                msg = [gamefont, "white", "black", [screensize[0]/2 - adjustsize[0]/2, 16], "Predict which player will win!"]
+                messages.append(msg)
+                for x in range(8):
+                    button = ["black", [screensize[0]/4 - 128 + x, screensize[1]/2 - 128 + x, 256, 256]]
+                    buttons.append(button)
+                    button = ["black", [3 * (screensize[0]/4) - 128 + x, screensize[1]/2 - 128 + x, 256, 256]]
+                    buttons.append(button)
+                button = ["cyan", [screensize[0]/4 - 128, screensize[1]/2 - 128, 256, 256]]
+                buttons.append(button)
+                button = ["magenta", [3 * (screensize[0]/4) - 128, screensize[1]/2 - 128, 256, 256]]
+                buttons.append(button)
+            elif selection == 1:
+                drawselectcursor = False
+                for x in range(4):
+                    button = ["black", [screensize[0]/4 - 124 + x, screensize[1]/2 - 124 + x, 256, 256]]
+                    buttons.append(button)
+                    button = ["black", [3 * (screensize[0]/4) - 128 + x, screensize[1]/2 - 128 + x, 256, 256]]
+                    buttons.append(button)
+                button = ["yellow", [screensize[0]/4 - 124, screensize[1]/2 - 124, 256, 256]]
+                buttons.append(button)
+                button = ["grey", [3 * (screensize[0]/4) - 128, screensize[1]/2 - 128, 256, 256]]
+                buttons.append(button)
+                if targetframe == 0: targetframe = frame
+                if frame == targetframe + 180:
+                    phase = "player turn intro"
+                    player = 1
+                    phasestart = True
+            elif selection == 2:
+                drawselectcursor = False
+                for x in range(4):
+                    button = ["black", [screensize[0]/4 - 128 + x, screensize[1]/2 - 128 + x, 256, 256]]
+                    buttons.append(button)
+                    button = ["black", [3 * (screensize[0]/4) - 124 + x, screensize[1]/2 - 124 + x, 256, 256]]
+                    buttons.append(button)
+                button = ["grey", [screensize[0]/4 - 128, screensize[1]/2 - 128, 256, 256]]
+                buttons.append(button)
+                button = ["yellow", [3 * (screensize[0]/4) - 124, screensize[1]/2 - 124, 256, 256]]
+                buttons.append(button)
+                if targetframe == 0: targetframe = frame
+                if frame == targetframe + 180:
+                    phase = "player turn intro"
+                    player = 1
+                    targetframe = 0
+                    phasestart = True
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT and selection == 0:
+                        if cursorpos[0] > screensize[0]/4 - 128 and cursorpos[0] < screensize[0]/4 + 128 and cursorpos[1] > screensize[1]/2 - 128 and screensize[1]/2 + 128:
+                            selection = 1
+                        elif cursorpos[0] > 3 * screensize[0]/4 - 128 and cursorpos[0] < 3 * screensize[0]/4 + 128 and cursorpos[1] > screensize[1]/2 - 128 and screensize[1]/2 + 128:
+                            selection = 2
         elif phase == "player turn intro": 
             messages = []
+            buttons = []
             if player == 1: 
                 playermessage = "Player 1's turn."
                 fontcolor = "cyan"
@@ -182,7 +251,7 @@ while 1:
                 currenthit = [dartpos, dartcolor]
                 hits.append(currenthit)
                 distancefromcenter = math.hypot(dartpos[0] - (screensize[0]/2), dartpos[1] - (screensize[1]/2))
-                isincircle = distancefromcenter <= (screensize[1]/2)
+                isincircle = distancefromcenter <= (screensize[1]/2) * 0.75
                 if isincircle: 
                     hittextcolor = [0, 255, 0, 255]
                     adjustsize = hitfont.size("HIT!")
@@ -253,9 +322,11 @@ while 1:
             if player1score > player2score: 
                 winner = "Player 1 wins!"
                 winnercolor = "cyan"
+                winnerselection = 1
             elif player2score > player1score: 
                 winner = "Player 2 wins!"
                 winnercolor = "magenta"
+                winnerselection = 1
             else: 
                 winner = "It was a tie..."
                 winnercolor = "white"
@@ -263,6 +334,14 @@ while 1:
             adjustsize = hitfont.size(winner)
             msg = [hitfont, winnercolor, "black", [screensize[0]/2 - adjustsize[0]/2, screensize[1]/2 - adjustsize[1]/2], winner]
             messages.append(msg)
+            if winnerselection == selection:
+                adjustsize = gamefont.size("Your prediction was correct! :D")
+                msg = [gamefont, winnercolor, "black", [screensize[0]/2 - adjustsize[0]/2, screensize[1]/2 + 128], "Your prediction was correct! :D"]
+                messages.append(msg)
+            else:
+                adjustsize = gamefont.size("Your prediction was wrong! :(")
+                msg = [gamefont, winnercolor, "black", [screensize[0]/2 - adjustsize[0]/2, screensize[1]/2 + 128], "Your prediction was wrong! :("]
+                messages.append(msg)
             if targetframe == 0: targetframe = frame
             if frame == targetframe + 300:
                 phase = "game end"
