@@ -3,12 +3,13 @@ import turtle
 def main():
     screen = turtle.Screen()
     newturtle = turtle.RawTurtle(screen)
-    execution(newturtle)
+    turtle.tracer(16, 0)
+    for x in range(1000):
+        execution(newturtle, x)
+    screen.mainloop()
 
-def execution(newturtle):
-    newturtle.forward(100)
-    newturtle.left(90)
-    newturtle.forward(100)
+def execution(newturtle, x):
+    newturtle.forward(x)
+    newturtle.left(15)
 
 main()
-turtle.done()

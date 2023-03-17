@@ -5,8 +5,8 @@ import math
 def motion(pen, resolution):
     choice = random.choice([0, 1])
     if choice == 1:
-        pen.right(135)
-    else: pen.left(135)
+        pen.right(180 - 5 * resolution)
+    else: pen.left(180 - 5 * resolution)
     pen.forward(50)
     if abs(pen.xcor()) > 300 or abs(pen.ycor()) > 300:
         pen.penup()
@@ -14,13 +14,11 @@ def motion(pen, resolution):
         pen.pendown()
 
 def altmotion(pen, resolution):
-    # if pen.xcor() >= 300:
-    #     pen.penup()
-    #     pen.goto(-300, pen.ycor() + 1)
-    #     pen.pendown()
-    # else: 
-    if pen.xcor() < 300: pen.forward(resolution)
-
+    if pen.xcor() >= 300 and pen.ycor() < 300:
+        pen.penup()
+        pen.goto(-300, pen.ycor() + 1)
+        pen.pendown()
+    elif pen.ycor() < 300: pen.forward(resolution)
 
 def color(pen):
     x = int(pen.xcor())
@@ -40,38 +38,30 @@ def color(pen):
 
 def main():
     
-    print("Select a resolution. Greater resolution creates less detail but will render faster.")
-    resolution = int(input("Resolution: "))
-    print("Select either chaotic or simple.")
-    mode = input("Mode: ")
-    print("Select render speed.")
+    print("Select drawing speed. (Specifically the number of movements that occur each frame. Very high speeds may cause lag.)")
     speed = input("Speed: ")
+    print("Select a resolution. Greater resolution creates less detail but will render faster. (Maximum: 35)")
+    resolution = int(input("Resolution: "))
+    print("Select either chaotic or simple. (Enter number)")
+    print("1. Simple - Simple pixel layout.")
+    print("2. Chaotic - Less predictable, will likely be slower but produce more interesting results.")
+    mode = input("Mode: ")
 
     screen = turtle.Screen()
     turtle.colormode(255)
-    pens = []
-    if mode == "simple":
-        for x in range(-300, 300, resolution):
-            newturtle = turtle.RawTurtle(screen)
-            newturtle.speed(0)
-            newturtle.width(resolution)
-            newturtle.hideturtle()
-            newturtle.penup()
-            newturtle.goto (-300, x)
-            newturtle.pendown()
-            pens.append(newturtle)
-    if mode == "chaotic":
-        newturtle = turtle.RawTurtle(screen)
-        newturtle.speed(0)
-        newturtle.width(resolution)
-        pens.append(newturtle)
+    turtle.tracer(speed, 0)
+    pen = turtle.RawTurtle(screen)
+    pen.speed(0)
+    pen.width(resolution)
+    if mode != "2" and mode != "1": 
+        print("Invalid input.") 
+        exit()
+    if mode == "1": pen.goto(-300, -300)
     while 1:
-        for _ in speed:
-            for pen in pens:
-                color(pen)
-                if mode == "chaotic":
-                    motion(pen, resolution)
-                if mode == "simple":
-                    altmotion(pen, resolution)
+        color(pen)
+        if mode == "2":
+            motion(pen, resolution)
+        if mode == "1":
+            altmotion(pen, resolution)
 
 main()
