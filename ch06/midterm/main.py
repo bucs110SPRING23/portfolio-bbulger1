@@ -5,8 +5,8 @@ import math
 def motion(pen, resolution):
     choice = random.choice([0, 1])
     if choice == 1:
-        pen.right(180 - 5 * resolution)
-    else: pen.left(180 - 5 * resolution)
+        pen.right(135)
+    else: pen.left(135)
     pen.forward(50)
     if abs(pen.xcor()) > 300 or abs(pen.ycor()) > 300:
         pen.penup()
@@ -16,7 +16,7 @@ def motion(pen, resolution):
 def altmotion(pen, resolution):
     if pen.xcor() >= 300 and pen.ycor() < 300:
         pen.penup()
-        pen.goto(-300, pen.ycor() + 1)
+        pen.goto(-300, pen.ycor() + resolution)
         pen.pendown()
     elif pen.ycor() < 300: pen.forward(resolution)
 
@@ -42,10 +42,10 @@ def main():
     speed = input("Speed: ")
     print("Select a resolution. Greater resolution creates less detail but will render faster. (Maximum: 35)")
     resolution = int(input("Resolution: "))
-    print("Select either chaotic or simple. (Enter number)")
-    print("1. Simple - Simple pixel layout.")
-    print("2. Chaotic - Less predictable, will likely be slower but produce more interesting results.")
-    mode = input("Mode: ")
+    # print("Select either chaotic or simple. (Enter number)")
+    # print("1. Simple - Simple pixel layout.")
+    # print("2. Chaotic - Less predictable, will likely be slower but produce more interesting results.")
+    mode = "2"#input("Mode: ")
 
     screen = turtle.Screen()
     turtle.colormode(255)
@@ -56,7 +56,10 @@ def main():
     if mode != "2" and mode != "1": 
         print("Invalid input.") 
         exit()
-    if mode == "1": pen.goto(-300, -300)
+    if mode == "1": 
+        pen.penup()
+        pen.goto(-300, -300)
+        pen.pendown()
     while 1:
         color(pen)
         if mode == "2":

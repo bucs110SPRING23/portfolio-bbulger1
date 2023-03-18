@@ -7,7 +7,7 @@ pygame.init()
 frame = 1
 
 while 1:
-    pygame.event.pump()
+    # pygame.event.pump()
 
     end = False
     screen = pygame.display.set_mode([1000, 750])
