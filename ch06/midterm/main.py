@@ -40,10 +40,15 @@ def main():
     
     print("Select drawing speed. (Specifically the number of movements that occur each frame. Very high speeds may cause lag.)")
     speed = input("Speed: ")
+    if speed == "": speed = 100
     print("Select a resolution. Greater resolution creates less detail but will render faster. (Maximum: 35)")
-    resolution = int(input("Resolution: "))
+    resolution = input("Resolution: ")
+    if resolution == "": resolution = 1
+    else: resolution = int(resolution)
     print("Select angle from 1 - 179. Default angle is 135. Greater angles will generate tighter lines but draw slower.")
-    angle = int(input("Angle: "))
+    angle = input("Angle: ")
+    if angle == "": angle = 135
+    else: angle = int(angle)
     # print("Select either chaotic or simple. (Enter number)")
     # print("1. Simple - Simple pixel layout.")
     # print("2. Chaotic - Less predictable, will likely be slower but produce more interesting results.")
