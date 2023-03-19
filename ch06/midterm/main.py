@@ -2,11 +2,11 @@ import turtle
 import random
 import math
 
-def motion(pen, resolution):
+def motion(pen, resolution, angle):
     choice = random.choice([0, 1])
     if choice == 1:
-        pen.right(135)
-    else: pen.left(135)
+        pen.right(angle)
+    else: pen.left(angle)
     pen.forward(50)
     if abs(pen.xcor()) > 300 or abs(pen.ycor()) > 300:
         pen.penup()
@@ -34,7 +34,7 @@ def color(pen):
         distancefromcenter = math.hypot(x, y - 100)
         if distancefromcenter < 100:
             pen.color([255, 255, 100])
-        else: pen.color([max(0, round(280 - y/4)), min(255, round(y * 0.8)), min(255, round(2*y))])
+        else: pen.color([max(0, round(280 - y/4 - abs(x)/4)), min(255, round(y * 0.8 + abs(x * 0.1))), min(255, round(2*y))])
 
 def main():
     
@@ -42,6 +42,8 @@ def main():
     speed = input("Speed: ")
     print("Select a resolution. Greater resolution creates less detail but will render faster. (Maximum: 35)")
     resolution = int(input("Resolution: "))
+    print("Select angle from 1 - 179. Default angle is 135. Greater angles will generate tighter lines but draw slower.")
+    angle = int(input("Angle: "))
     # print("Select either chaotic or simple. (Enter number)")
     # print("1. Simple - Simple pixel layout.")
     # print("2. Chaotic - Less predictable, will likely be slower but produce more interesting results.")
@@ -63,7 +65,7 @@ def main():
     while 1:
         color(pen)
         if mode == "2":
-            motion(pen, resolution)
+            motion(pen, resolution, angle)
         if mode == "1":
             altmotion(pen, resolution)
 

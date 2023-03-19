@@ -22,18 +22,18 @@ def graph_coordinates(threenplus1_iters_dict, display):
     coordinates = list(threenplus1_iters_dict.items())
     pygame.draw.lines(display, "blue", False, coordinates)
     new_display = pygame.transform.flip(display, False, True)
-    new_display_size = new_display.get_size()
-    # new_display = pygame.transform.scale(new_display, (new_display_size[0] * 5, new_display_size[1] * 5))
+    width, height = new_display.get_size()
+    new_display = pygame.transform.scale(display, (width * 2, height * 2))
     display.blit(new_display, (0,0))
     pygame.display.flip()
 
 def main():
-    n = int(input("Upper Limit: "))
+    n = 500
     objs_in_sequence = threenp1range(n)
     pygame.init()
+    display = pygame.display.set_mode([1000, 750])
     while 1:
-        display = pygame.display.set_mode([1000, 750])
-        display.fill("pink")
+        display.fill("black")
         graph_coordinates(objs_in_sequence, display)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
