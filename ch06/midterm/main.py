@@ -3,6 +3,11 @@ import random
 import math
 
 def motion(pen, resolution, angle):
+    '''
+    controls the motion of the pen, causing it to move forward and then rotate randomly each step
+    args: (turtle) pen to move, (int) thickness of turtle, (int or float) angle to rotate after each movement
+    return: None
+    '''
     choice = random.choice([0, 1])
     if choice == 1:
         pen.right(angle)
@@ -14,6 +19,11 @@ def motion(pen, resolution, angle):
         pen.pendown()
 
 def altmotion(pen, resolution):
+    '''
+    (UNUSED) alternate motion that causes the pen to draw straight across each line 
+    args: (turtle) pen to move, (int) thickness of turtle/spacing between each line
+    return: None
+    '''
     if pen.xcor() >= 300 and pen.ycor() < 300:
         pen.penup()
         pen.goto(-300, pen.ycor() + resolution)
@@ -21,6 +31,11 @@ def altmotion(pen, resolution):
     elif pen.ycor() < 300: pen.forward(resolution)
 
 def color(pen):
+    '''
+    controls color of pen based on location
+    args: (turtle) pen to control
+    return: None
+    '''
     x = int(pen.xcor())
     y = int(pen.ycor())
     if y <= -5:
@@ -37,22 +52,21 @@ def color(pen):
         else: pen.color([max(0, round(280 - y/4 - abs(x)/4)), min(255, round(y * 0.8 + abs(x * 0.1))), min(255, round(2*y))])
 
 def main():
-    
-    print("Select drawing speed. (Specifically the number of movements that occur each frame. Very high speeds may cause lag.)")
+    print("Select drawing speed. (Specifically the number of movements that occur each frame. Very high speeds may cause lag.) (Default: 100)")
     speed = input("Speed: ")
     if speed == "": speed = 100
-    print("Select a resolution. Greater resolution creates less detail but will render faster. (Maximum: 35)")
+    print("Select a resolution. Greater resolution creates less detail but will render faster. (Default: 1)")
     resolution = input("Resolution: ")
     if resolution == "": resolution = 1
     else: resolution = int(resolution)
-    print("Select angle from 1 - 179. Default angle is 135. Greater angles will generate tighter lines but draw slower.")
+    print("Select angle from 1 - 179. Default angle is 135. Greater angles will generate tighter lines but draw slower. (Default: 135)")
     angle = input("Angle: ")
     if angle == "": angle = 135
     else: angle = int(angle)
-    # print("Select either chaotic or simple. (Enter number)")
-    # print("1. Simple - Simple pixel layout.")
-    # print("2. Chaotic - Less predictable, will likely be slower but produce more interesting results.")
-    mode = "2"#input("Mode: ")
+    print("Select either chaotic or simple. (Enter number)")
+    print("1. Simple - Simple pixel layout.")
+    print("2. Chaotic - Less predictable, will likely be slower but produce more interesting results.")
+    mode = input("Mode: ")
 
     screen = turtle.Screen()
     turtle.colormode(255)
