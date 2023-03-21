@@ -6,12 +6,12 @@ def uservalues():
     '''
     accepts user inputs for drawing settings
     args: None
-    return: (string) file, (int) speed, (int) resolution, (int) angle, (string) mode
+    return: (list) inputvars - list containing (string) file, (int) speed, (int) resolution, (int) angle, (string) mode
     '''
     uservalues = [["Enter filename. (File must be in midterm folder. (Defaults to img_sunset.txt)", "Filename: ", "img_sunset.txt"],
                   ["Select drawing speed. (Specifically the number of movements that occur each frame. Very high speeds may cause lag.) (Default: 100)", "Speed: ", 100],
                   ["Select a resolution. Greater resolution creates less detail but will render faster. (Default: 1)", "Resolution: ", 1],
-                  ["Select angle from 1 - 179. Default angle is 135. Greater angles will generate tighter lines but draw slower. (Only applies to chaotic mode) (Default: 135)", "Angle: ", 135],
+                  ["Select angle for pen rotation (1-179). Greater angles will generate tighter lines but draw slower. (Only applies to chaotic mode) (Default: 135)", "Angle: ", 135],
                   ["Select either chaotic or simple. (Enter number)\n 1. Chaotic - Unpredictable motion! o_0\n 2. Simple - Simple pixel layout.", "Mode: ", "1"]]
     inputvars = []
     for description, inputmsg, default in uservalues:
@@ -26,7 +26,7 @@ def fileprocessor(filename):
     '''
     opens file and generates list of values
     args: None
-    return: (list) imgdata
+    return: (list) imgdata - list containing color data needed to draw image
     '''
     filepath = "ch06/midterm/" + filename
     file = open(filepath, "r")
@@ -39,8 +39,8 @@ def fileprocessor(filename):
 def turtlesetup(speed, resolution, mode):
     '''
     sets up turtle screen and pen
-    args: (int) speed, (int) resolution
-    return: (turtle.Turtle) pen
+    args: (int) speed - number of pen movements that will occur per second, (int) resolution - size of pen lines
+    return: (turtle.Turtle) pen - pen that will be used to draw image
     '''
     screen = turtle.Screen()
     turtle.colormode(255)
@@ -61,7 +61,7 @@ def turtlesetup(speed, resolution, mode):
 def motion_chaotic(pen, angle):
     '''
     controls the motion of the pen, causing it to move forward and then rotate randomly each step
-    args: (turtle.Turtle) pen to move, (int) thickness of turtle, (int or float) angle to rotate after each movement
+    args: (turtle.Turtle) pen - pen to move, (int or float) angle - angle to rotate after each movement
     return: None
     '''
     choice = random.choice([0, 1])
@@ -77,7 +77,7 @@ def motion_chaotic(pen, angle):
 def motion_simple(pen, resolution):
     '''
     alternate motion that causes the pen to draw straight across each line 
-    args: (turtle) pen to move, (int) thickness of turtle/spacing between each line
+    args: (turtle) pen - pen to move, (int) resolution - thickness of turtle/spacing between each line
     return: None
     '''
     if pen.xcor() >= 300:
@@ -89,7 +89,7 @@ def motion_simple(pen, resolution):
 def color(pen, imgdata):
     '''
     controls color of pen based on location using data from external file
-    args: (turtle) pen to control, (list) image data, should be created by fileprocessor function
+    args: (turtle) pen - pen to control, (list) imgdata - color data for image, should be created by fileprocessor function from a .txt file
     return: None
     '''
     x = int(pen.xcor())
@@ -101,33 +101,33 @@ def color(pen, imgdata):
             x2 = int(imgdata[n+2])
             y1 = int(imgdata[n+3])
             y2 = int(imgdata[n+4])
-            RGBvalue = [int(imgdata[n+5]), int(imgdata[n+8]), int(imgdata[n+11])]
-            RGBxshift = [int(imgdata[n+6]), int(imgdata[n+9]), int(imgdata[n+12])]
-            RGByshift = [int(imgdata[n+7]), int(imgdata[n+10]), int(imgdata[n+13])]
+            rgbvalue = [int(imgdata[n+5]), int(imgdata[n+8]), int(imgdata[n+11])]
+            rgbxshift = [int(imgdata[n+6]), int(imgdata[n+9]), int(imgdata[n+12])]
+            rgbyshift = [int(imgdata[n+7]), int(imgdata[n+10]), int(imgdata[n+13])]
             if x >= x1 and x <= x2 and y >= y1 and y <= y2:
-                RGBresult = []
+                rgbresult = []
                 for c in range(3):
                     xshift = (x - x1)/(x2 - x1)
                     yshift = (y - y1)/(y2 - y1)
-                    RGBresult.append(round(min(255, max(0, RGBvalue[c] + (xshift * RGBxshift[c]) + (yshift * RGByshift[c])))))
-                pen.color(RGBresult[0], RGBresult[1], RGBresult[2])
+                    rgbresult.append(round(min(255, max(0, rgbvalue[c] + (xshift * rgbxshift[c]) + (yshift * rgbyshift[c])))))
+                pen.color(rgbresult[0], rgbresult[1], rgbresult[2])
         if shape == "circ":
             x1 = int(imgdata[n+1])
             y1 = int(imgdata[n+2])
             r = int(imgdata[n+3])
             t1 = int(imgdata[n+4])
             t2 = int(imgdata[n+5])
-            RGBvalue = [int(imgdata[n+6]), int(imgdata[n+8]), int(imgdata[n+10])]
-            RGBrshift = [int(imgdata[n+7]), int(imgdata[n+9]), int(imgdata[n+11])]
+            rgbvalue = [int(imgdata[n+6]), int(imgdata[n+8]), int(imgdata[n+10])]
+            rgbrshift = [int(imgdata[n+7]), int(imgdata[n+9]), int(imgdata[n+11])]
             dist = math.hypot(x - x1, y - y1)
             angle = math.degrees(math.atan2(y - y1, x - x1))
             if angle < 0: angle += 360
             if dist <= r and angle >= t1 and angle <= t2:
-                RGBresult = []
+                rgbresult = []
                 for c in range(3):
                     rshift = dist/r
-                    RGBresult.append(round(min(255, max(0, RGBvalue[c] + (rshift * RGBrshift[c])))))
-                pen.color(RGBresult[0], RGBresult[1], RGBresult[2])
+                    rgbresult.append(round(min(255, max(0, rgbvalue[c] + (rshift * rgbrshift[c])))))
+                pen.color(rgbresult[0], rgbresult[1], rgbresult[2])
         if y > 300: pen.color("white")
 
 
