@@ -2,7 +2,7 @@
 
 ## SHORT DESCRIPTION *Draws beautiful images from files.*
 
-## KNOWN BUGS AND INCOMPLETE PARTS *Nope*
+## KNOWN BUGS AND INCOMPLETE PARTS *Nope :D*
 
 ## REFERENCES *Python turtle documentation https://docs.python.org/3/library/turtle.html#turtle.textinput (I don't know if this counts as a class material)*
 
