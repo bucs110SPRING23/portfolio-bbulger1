@@ -1,0 +1,19 @@
+def color(pen):
+    '''
+    controls color of pen based on location
+    args: (turtle) pen to control
+    return: None
+    '''
+    x = int(pen.xcor())
+    y = int(pen.ycor())
+    if y <= -5:
+        pen.color(max(0, round(255 + (y/4))), max(0, round(233 + (y/3))), max(0, round(208 + (y/2))))
+    elif y <= 5 and y > -5:
+        pen.color([255, 255, 255])
+    elif y <= 100 and y > 5:
+        pen.color(max(0, round(128 - (y))), max(0, round(252 - (y*2))), 255)
+    elif y > 100:
+        distancefromcenter = math.hypot(x, y - 100)
+        if distancefromcenter < 100:
+            pen.color([255, 240, 100])
+        else: pen.color([max(0, round(280 - y/4 - abs(x)/4)), min(255, round(y * 0.8 + abs(x * 0.1))), min(255, round(2*y))])

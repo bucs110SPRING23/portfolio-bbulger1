@@ -6,33 +6,29 @@ def uservalues():
     '''
     accepts user inputs for drawing settings
     args: None
-    return: (int) speed, (int) resolution, (int) angle, (string) mode
+    return: (string) file, (int) speed, (int) resolution, (int) angle, (string) mode
     '''
-    print("Select drawing speed. (Specifically the number of movements that occur each frame. Very high speeds may cause lag.) (Default: 100)")
-    speed = input("Speed: ")
-    if speed == "": speed = 100
-    print("Select a resolution. Greater resolution creates less detail but will render faster. (Default: 1)")
-    resolution = input("Resolution: ")
-    if resolution == "": resolution = 1
-    else: resolution = int(resolution)
-    print("Select angle from 1 - 179. Default angle is 135. Greater angles will generate tighter lines but draw slower. (Only applies to chaotic mode) (Default: 135)")
-    angle = input("Angle: ")
-    if angle == "": angle = 135
-    else: angle = int(angle)
-    print("Select either chaotic or simple. (Enter number)")
-    print("1. Simple - Simple pixel layout.")
-    print("2. Chaotic - Less predictable, will likely be slower but produce more interesting results.")
-    mode = input("Mode: ")
-    if mode == "": mode = "2"
-    return speed, resolution, angle, mode
+    uservalues = [["Enter filename. (File must be in midterm folder. (Defaults to img_sunset.txt)", "Filename: ", "img_sunset.txt"],
+                  ["Select drawing speed. (Specifically the number of movements that occur each frame. Very high speeds may cause lag.) (Default: 100)", "Speed: ", 100],
+                  ["Select a resolution. Greater resolution creates less detail but will render faster. (Default: 1)", "Resolution: ", 1],
+                  ["Select angle from 1 - 179. Default angle is 135. Greater angles will generate tighter lines but draw slower. (Only applies to chaotic mode) (Default: 135)", "Angle: ", 135],
+                  ["Select either chaotic or simple. (Enter number)\n 1. Chaotic - Unpredictable motion! o_0\n 2. Simple - Simple pixel layout.", "Mode: ", "1"]]
+    inputvars = []
+    for description, inputmsg, default in uservalues:
+        print(description)
+        inputvar = input(inputmsg)
+        if inputvar == "": inputvar = default
+        inputvars.append(inputvar)
+    inputvars = [inputvars[0], int(inputvars[1]), int(inputvars[2]), int(inputvars[3]), inputvars[4]]
+    return inputvars
 
-def fileprocessor():
+def fileprocessor(filename):
     '''
     opens file and generates list of values
     args: None
     return: (list) imgdata
     '''
-    filepath = "ch06/midterm/img_simplegradient.txt"
+    filepath = "ch06/midterm/" + filename
     file = open(filepath, "r")
     imgdata = file.read()
     imgdata = imgdata.split()
@@ -40,10 +36,32 @@ def fileprocessor():
     file.close()
     return imgdata
 
-def motion(pen, resolution, angle):
+def turtlesetup(speed, resolution, mode):
+    '''
+    sets up turtle screen and pen
+    args: (int) speed, (int) resolution
+    return: (turtle.Turtle) pen
+    '''
+    screen = turtle.Screen()
+    turtle.colormode(255)
+    turtle.tracer(speed, 0)
+    pen = turtle.RawTurtle(screen)
+    pen.speed(0)
+    pen.color("white")
+    pen.width(resolution)
+    if mode != "1" and mode != "2": 
+        print("Invalid input.") 
+        exit()
+    if mode == "2": 
+        pen.penup()
+        pen.goto(-300, -300)
+        pen.pendown()
+    return pen
+
+def motion_chaotic(pen, angle):
     '''
     controls the motion of the pen, causing it to move forward and then rotate randomly each step
-    args: (turtle) pen to move, (int) thickness of turtle, (int or float) angle to rotate after each movement
+    args: (turtle.Turtle) pen to move, (int) thickness of turtle, (int or float) angle to rotate after each movement
     return: None
     '''
     choice = random.choice([0, 1])
@@ -53,42 +71,22 @@ def motion(pen, resolution, angle):
     pen.forward(50)
     if abs(pen.xcor()) > 300 or abs(pen.ycor()) > 300:
         pen.penup()
-        pen.goto(random.randrange(-300, 300), random.randrange(-300, 300))
+        pen.goto(random.randrange(-250, 250), random.randrange(-300, 300))
         pen.pendown()
 
-def altmotion(pen, resolution):
+def motion_simple(pen, resolution):
     '''
     alternate motion that causes the pen to draw straight across each line 
     args: (turtle) pen to move, (int) thickness of turtle/spacing between each line
     return: None
     '''
-    if pen.xcor() >= 300 and pen.ycor() < 300:
+    if pen.xcor() >= 300:
         pen.penup()
         pen.goto(-300, pen.ycor() + resolution)
         pen.pendown()
-    elif pen.ycor() < 300: pen.forward(resolution)
+    else: pen.forward(resolution)
 
-def color(pen):
-    '''
-    controls color of pen based on location
-    args: (turtle) pen to control
-    return: None
-    '''
-    x = int(pen.xcor())
-    y = int(pen.ycor())
-    if y <= -5:
-        pen.color(max(0, round(255 + (y/4))), max(0, round(233 + (y/3))), max(0, round(208 + (y/2))))
-    elif y <= 5 and y > -5:
-        pen.color([255, 255, 255])
-    elif y <= 100 and y > 5:
-        pen.color(max(0, round(128 - (y))), max(0, round(252 - (y*2))), 255)
-    elif y > 100:
-        distancefromcenter = math.hypot(x, y - 100)
-        if distancefromcenter < 100:
-            pen.color([255, 240, 100])
-        else: pen.color([max(0, round(280 - y/4 - abs(x)/4)), min(255, round(y * 0.8 + abs(x * 0.1))), min(255, round(2*y))])
-
-def advcolor(pen, imgdata):
+def color(pen, imgdata):
     '''
     controls color of pen based on location using data from external file
     args: (turtle) pen to control, (list) image data, should be created by fileprocessor function
@@ -96,51 +94,54 @@ def advcolor(pen, imgdata):
     '''
     x = int(pen.xcor())
     y = int(pen.ycor())
-    for x in range(0, len(imgdata), 14):
-        shape = imgdata[x]
+    for n in range(0, len(imgdata), 14):
+        shape = imgdata[n]
         if shape == "rect":
-            x1 = int(imgdata[x+1])
-            x2 = int(imgdata[x+2])
-            y1 = int(imgdata[x+3])
-            y2 = int(imgdata[x+4])
-            Rvalue = int(imgdata[x+5])
-            Rxshift = float(imgdata[x+6])
-            Ryshift = float(imgdata[x+7])
-            Gvalue = int(imgdata[x+8])
-            Gxshift = float(imgdata[x+9])
-            Gyshift = float(imgdata[x+10])
-            Bvalue = int(imgdata[x+11])
-            Bxshift = float(imgdata[x+12])
-            Byshift = float(imgdata[x+13])
-            if x >= x1 and x < x2 and y >= y1 and y < y2:
-                pen.color([round(min(255, max(0, Rvalue + (abs(x) * Rxshift) + (abs(y) * Ryshift)))), round(min(255, max(0, Gvalue + (abs(x) * Gxshift) + (abs(y) * Gyshift)))), round(min(255, max(0, Bvalue + (abs(x) * Bxshift) + (abs(y) * Byshift))))])
-            else:
-                pen.color([255,255,255])
+            x1 = int(imgdata[n+1])
+            x2 = int(imgdata[n+2])
+            y1 = int(imgdata[n+3])
+            y2 = int(imgdata[n+4])
+            RGBvalue = [int(imgdata[n+5]), int(imgdata[n+8]), int(imgdata[n+11])]
+            RGBxshift = [int(imgdata[n+6]), int(imgdata[n+9]), int(imgdata[n+12])]
+            RGByshift = [int(imgdata[n+7]), int(imgdata[n+10]), int(imgdata[n+13])]
+            if x >= x1 and x <= x2 and y >= y1 and y <= y2:
+                RGBresult = []
+                for c in range(3):
+                    xshift = (x - x1)/(x2 - x1)
+                    yshift = (y - y1)/(y2 - y1)
+                    RGBresult.append(round(min(255, max(0, RGBvalue[c] + (xshift * RGBxshift[c]) + (yshift * RGByshift[c])))))
+                pen.color(RGBresult[0], RGBresult[1], RGBresult[2])
+        if shape == "circ":
+            x1 = int(imgdata[n+1])
+            y1 = int(imgdata[n+2])
+            r = int(imgdata[n+3])
+            t1 = int(imgdata[n+4])
+            t2 = int(imgdata[n+5])
+            RGBvalue = [int(imgdata[n+6]), int(imgdata[n+8]), int(imgdata[n+10])]
+            RGBrshift = [int(imgdata[n+7]), int(imgdata[n+9]), int(imgdata[n+11])]
+            dist = math.hypot(x - x1, y - y1)
+            angle = math.degrees(math.atan2(y - y1, x - x1))
+            if angle < 0: angle += 360
+            if dist <= r and angle >= t1 and angle <= t2:
+                RGBresult = []
+                for c in range(3):
+                    rshift = dist/r
+                    RGBresult.append(round(min(255, max(0, RGBvalue[c] + (rshift * RGBrshift[c])))))
+                pen.color(RGBresult[0], RGBresult[1], RGBresult[2])
+        if y > 300: pen.color("white")
+
 
 def main():
     
-    speed, resolution, angle, mode = uservalues()
-    imgdata = fileprocessor()
-
-    screen = turtle.Screen()
-    turtle.colormode(255)
-    turtle.tracer(speed, 0)
-    pen = turtle.RawTurtle(screen)
-    pen.speed(3)
-    pen.width(resolution)
-    if mode != "2" and mode != "1": 
-        print("Invalid input.") 
-        exit()
-    if mode == "1": 
-        pen.penup()
-        pen.goto(-300, -300)
-        pen.pendown()
+    filename, speed, resolution, angle, mode = uservalues()
+    imgdata = fileprocessor(filename)
+    pen = turtlesetup(speed, resolution, mode)
+    
     while 1:
-        advcolor(pen, imgdata)
-        #color(pen)
-        if mode == "2":
-            motion(pen, resolution, angle)
+        color(pen, imgdata)
         if mode == "1":
-            altmotion(pen, resolution)
+            motion_chaotic(pen, angle)
+        if mode == "2":
+            motion_simple(pen, resolution)
 
 main()

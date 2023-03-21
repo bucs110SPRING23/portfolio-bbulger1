@@ -1,2 +1,0 @@
-rect x1 x2 y1 y2 R Rxshift Ryshift G Gxshift Gyshift B Bxshift Byshift
-circ x y r t1 t2 R Rrshift G Grshift B Brshift _ _

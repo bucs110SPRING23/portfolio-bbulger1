@@ -1,0 +1,29 @@
+rect x1 x2 y1 y2 R Rxshift Ryshift G Gxshift Gyshift B Bxshift Byshift
+circ x y r t1 t2 R Rrshift G Grshift B Brshift 0 0
+
+--NOTES--
+Every value must be an integer, and each shape must have 13 integers after the shape name. 
+Shapes must be either "rect" for rectangle of "circ" for circle.
+The two "0"s listed after the values for circ aren't read but are necessary to properly loop over each shape.
+There should be no empty space that isn't filled by some object, as it won't render properly.
+Objects can overlap, objects will be layered back to front in the order they are listed.
+For rectangles,
+    x1 is the x-coord of the bottom left corner.
+    x2 is the x-coord of the top right corner.
+    y1 is the y-coord of the bottom left corner.
+    x2 is the x-coord of the top right corner.
+    R, G, B represent the RGB value of the bottom left corner.
+    Rxshift, Gxshift, Bxshift add/subtract to the base RGB values to the right side of the rectangle (creating a gradient).
+    Ryshift, Gyshift, Byshift add/subtract to the base RGB values to the top side of the rectangle (creating a gradient).
+        The RGB value of the top right corner will be the RGB value of the bottom left corner + the xshift and yshift values combined.
+For circles,
+    x is the x-coord of the center of the circle.
+    y is the y-coord of the center of the circle.
+    r is the radius of the circle.
+    t1 is the starting angle of the circle. (0 is pointing to the right)
+    t2 is the ending angle of the circle. Must be between t1 and 360.
+        To create a full circle, t1 = 0 and t2 = 360
+    R, G, B represent the RGB value of the center.
+    Rrshift, Grshift, Brshift add/subtract to the base RGB values to the outside of the circle.
+        The RGB value at the edge of the circle will be the RGB value of the center + the rshift value.
+        *Unfortunately I wasn't able to implement x/yshift values for circles :(
