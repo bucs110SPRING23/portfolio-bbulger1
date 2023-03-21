@@ -2,7 +2,7 @@ rect x1 x2 y1 y2 R Rxshift Ryshift G Gxshift Gyshift B Bxshift Byshift
 circ x y r t1 t2 R Rrshift G Grshift B Brshift 0 0
 
 --NOTES--
-Every value must be an integer, and each shape must have 13 integers after the shape name. 
+Every value must be an integer, and each shape must have 13 integers after the shape name with a space in between each. 
 Shapes must be either "rect" for rectangle of "circ" for circle.
 The two "0"s listed after the values for circ aren't read but are necessary to properly loop over each shape.
 There should be no empty space that isn't filled by some object, as it won't render properly.
