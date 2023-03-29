@@ -2,7 +2,7 @@ class Weapon_Of_Mass_Destruction:
     def __init__(self, target, pnum=1):
         """
         Initialize the Weapon of Mass Destruction
-        args: pnum [int] the weapon's id number, target [tuple] coordinates of target
+        args: target [tuple] coordinates of target, pnum [int] the weapon's id number, 
         """
         self.wmd_num = pnum
         self.target = target
