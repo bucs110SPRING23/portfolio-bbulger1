@@ -4,10 +4,8 @@ import src.utility as utility
 
 class View:
     def __init__(self):
-        pygame.init()
         self.util = utility.Utility()
         self.screen = pygame.display.set_mode([self.util.WINDOW_SIZE, self.util.WINDOW_SIZE])
-
 
     def generate_background(self, colors, frame):
 
@@ -20,7 +18,7 @@ class View:
 
     def generate_color(self, colors, frame):
         for color in colors:
-            pygame.draw.rect(self.screen, color, [random.randrange(-500, 500), random.randrange(-500, 500), random.randrange(0, frame), random.randrange(0, frame)])
+            pygame.draw.rect(self.screen, color, [random.randrange(-500, 500), random.randrange(-500, 500), random.randrange(0, 500), random.randrange(0, 500)])
         
         # pygame.display.flip()
 

@@ -1,17 +1,9 @@
-import pygame
-import sys
+from PIL import Image
 
 class ImageProcessor():
-    def do():
-        sprite = pygame.sprite.Sprite("assets/random.jpeg")
-        pygame.init()
-        pygame.display.set_mode(500, 500)
+    def __init__(self):
+        x = 1
 
-        while 1:
-            pygame.sprite.RenderPlain(sprite)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-
-ImageProcessor.do()
+    def image_processor(self, image):
+        pic = Image.open(image, "r")
+        pic.save("ch10/final_project/assets", "JPEG")
