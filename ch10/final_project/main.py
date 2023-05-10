@@ -6,6 +6,11 @@ import src.controller as controller
 # import your controller
 
 def main():
+    '''
+    main function
+    args: none
+    return: none
+    '''
     pygame.init()
     main_controller = controller.Controller()
     # Create an instance on your controller object

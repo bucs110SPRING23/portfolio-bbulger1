@@ -4,15 +4,30 @@ import src.utility as utility
 
 class ImageProcessor():
     def __init__(self):
+        '''
+        init function for image processor
+        args: self
+        return: none
+        '''
         self.util = utility.Utility()
         #self.pil_color.init()
 
     def coffee_resize(self):
+        '''
+        resizes coffee image to fit windows size
+        args: self
+        return: none
+        '''
         image = pygame.image.load("ch10/final_project/assets/image.jpg")
         new_image = pygame.transform.scale(image, [self.util.WINDOW_SIZE, self.util.WINDOW_SIZE])
         pygame.image.save(new_image, "ch10/final_project/assets/new_image.jpg")
 
     def image_processor(self, colors):
+        '''
+        generates new image with color pallete from base image
+        args: self, (list) colors
+        return: (Image) final image
+        '''
         new_image = Image.open("ch10/final_project/assets/new_image.jpg", "r")
         image_r = Image.new("L", [self.util.WINDOW_SIZE, self.util.WINDOW_SIZE], 0)
         image_g = Image.new("L", [self.util.WINDOW_SIZE, self.util.WINDOW_SIZE], 0)
@@ -27,11 +42,9 @@ class ImageProcessor():
                     val_b = pixel[2] - color[2]
                     dif = abs(val_r + val_g + val_b)
                     color_compare.append(dif)
-                print(color_compare)
                 m = min(color_compare)
                 i = color_compare.index(m)
                 new_pixel = colors[i]
-                print(new_pixel)
                 image_r.putpixel([x, y], new_pixel[0])
                 image_g.putpixel([x, y], new_pixel[1])
                 image_b.putpixel([x, y], new_pixel[2])

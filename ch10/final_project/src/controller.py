@@ -8,6 +8,11 @@ import src.utility as utility
 
 class Controller:
     def __init__(self):
+        '''
+        init function for controller
+        args: self
+        return: none
+        '''
         #module objects
         self.util = utility.Utility()
         self.coffee = coffee.Coffee()
@@ -23,6 +28,11 @@ class Controller:
         self.display_image = False
 
     def mainloop(self):
+        '''
+        mainloop function
+        args: self
+        return: none
+        '''
         while 1:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -36,7 +46,6 @@ class Controller:
                         self.coffee.image()
                         self.img.coffee_resize()
                         self.img.image_processor(self.colors)
-                        self.view.clear()
                         self.display_image = True
             self.frame += 1
             #self.view.generate_background(self.colors, self.frame)
