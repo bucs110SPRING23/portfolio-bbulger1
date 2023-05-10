@@ -1,5 +1,4 @@
 import requests
-import json
 
 class ColormindAPI():
     def __init__(self):

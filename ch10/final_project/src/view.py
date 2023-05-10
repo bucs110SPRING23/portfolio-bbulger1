@@ -23,13 +23,13 @@ class View:
         message = self.main_font.render(self.util.MSG, False, "white")
         self.screen.blit(message, [16, 16])
 
-    def loading_display(self):
+    def loading_display(self, msg):
         '''
         displays text for loading
         args: none
         return: none
         '''
-        message = self.main_font.render(self.util.MSG2, False, "yellow", "black")
+        message = self.main_font.render(msg, False, "yellow", "black")
         self.screen.blit(message, [16, self.util.WINDOW_SIZE - 32])
         pygame.display.flip()
 

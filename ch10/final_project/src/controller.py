@@ -41,7 +41,7 @@ class Controller:
                 if event.type == pygame.KEYDOWN:
                     if self.accept_input:
                         #self.accept_input = False
-                        self.view.loading_display()
+                        self.view.loading_display(self.util.MSG2)
                         self.colors = self.colormind.return_colors()
                         self.coffee.image()
                         self.img.coffee_resize()

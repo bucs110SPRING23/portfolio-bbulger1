@@ -11,3 +11,4 @@ class Utility():
         self.FRAME_DELAY = 25
         self.MSG = "Press any key to generate insane cofveves"
         self.MSG2 = "Loading new cofveve"
+        self.MSG3 = "Connection failed"
