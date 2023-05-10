@@ -10,7 +10,6 @@ class Coffee():
         '''
         self.key = "https://coffee.alexflipnote.dev/random.json"
 
-
     def image(self):
         '''
         gets new coffee image from api

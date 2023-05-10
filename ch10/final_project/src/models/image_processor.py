@@ -12,23 +12,24 @@ class ImageProcessor():
         self.util = utility.Utility()
         #self.pil_color.init()
 
-    def coffee_resize(self):
+    def coffee_resize(self, filepath, output_location):
         '''
         resizes coffee image to fit windows size
-        args: self
-        return: none
+        args: self, filepath (filepath) image source, output_location (output_location) filepath to save image output to
+        return: (filepath) filepath for output image
         '''
-        image = pygame.image.load("ch10/final_project/assets/image.jpg")
+        image = pygame.image.load(filepath)
         new_image = pygame.transform.scale(image, [self.util.WINDOW_SIZE, self.util.WINDOW_SIZE])
-        pygame.image.save(new_image, "ch10/final_project/assets/new_image.jpg")
+        pygame.image.save(new_image, output_location + "new_image.jpg")
+        return output_location + "new_image.jpg"
 
-    def image_processor(self, colors):
+    def image_processor(self, colors, filepath, output_location):
         '''
         generates new image with color pallete from base image
-        args: self, (list) colors
-        return: (Image) final image
+        args: self, colors (list) color pallete, filepath (filepath) image source, output_location (output_location) filepath to save images output to
+        return: (filepath) filepath for final image output
         '''
-        new_image = Image.open("ch10/final_project/assets/new_image.jpg", "r")
+        new_image = Image.open(filepath, "r")
         image_r = Image.new("L", [self.util.WINDOW_SIZE, self.util.WINDOW_SIZE], 0)
         image_g = Image.new("L", [self.util.WINDOW_SIZE, self.util.WINDOW_SIZE], 0)
         image_b = Image.new("L", [self.util.WINDOW_SIZE, self.util.WINDOW_SIZE], 0)
@@ -48,9 +49,9 @@ class ImageProcessor():
                 image_r.putpixel([x, y], new_pixel[0])
                 image_g.putpixel([x, y], new_pixel[1])
                 image_b.putpixel([x, y], new_pixel[2])
-        image_r.save("ch10/final_project/assets/image_r.jpg")
-        image_b.save("ch10/final_project/assets/image_g.jpg")
-        image_g.save("ch10/final_project/assets/image_b.jpg")
+        image_r.save(output_location + "image_r.jpg")
+        image_b.save(output_location + "image_g.jpg")
+        image_g.save(output_location + "image_b.jpg")
         final_image = Image.merge("RGB", [image_r, image_b, image_g])
-        final_image.save("ch10/final_project/assets/final_image.jpg")
-        return final_image
+        final_image.save(output_location + "final_image.jpg")
+        return output_location + "final_image.jpg"
