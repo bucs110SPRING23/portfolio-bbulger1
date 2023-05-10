@@ -19,7 +19,7 @@ class View:
         args: self
         return: none
         '''
-        message = self.main_font.render(False, "white")
+        message = self.main_font.render(msg, False, "white")
         self.screen.blit(message, [16, 16])
 
     def loading_display(self, msg):
