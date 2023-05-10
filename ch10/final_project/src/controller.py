@@ -16,10 +16,11 @@ class Controller:
         self.img = image_processor.ImageProcessor()
         self.frame = 0
         self.view = view.View()
+        self.accept_input = True
 
         #setup 
-        self.coffee.image()
-        self.new_image = self.img.coffee_resize()
+        self.view.text_display()
+        self.display_image = False
 
     def mainloop(self):
         while 1:
@@ -28,13 +29,18 @@ class Controller:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
-                    self.colors = self.colormind.return_colors()
-                    self.coffee.image()
-                    self.new_image = self.img.coffee_resize()
-                    self.view.clear()
+                    if self.accept_input:
+                        #self.accept_input = False
+                        self.view.loading_display()
+                        self.colors = self.colormind.return_colors()
+                        self.coffee.image()
+                        self.img.coffee_resize()
+                        self.img.image_processor(self.colors)
+                        self.view.clear()
+                        self.display_image = True
             self.frame += 1
             #self.view.generate_background(self.colors, self.frame)
             #self.view.generate_color(self.colors, self.frame)
-            self.view.draw_coffee(self.new_image)
+            if self.display_image: self.view.draw_coffee()
+            #self.accept_input = True
             pygame.display.flip()
-            pygame.time.delay(self.util.FRAME_DELAY)

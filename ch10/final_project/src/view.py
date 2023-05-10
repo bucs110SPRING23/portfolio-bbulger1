@@ -6,6 +6,17 @@ class View:
     def __init__(self):
         self.util = utility.Utility()
         self.screen = pygame.display.set_mode([self.util.WINDOW_SIZE, self.util.WINDOW_SIZE])
+        pygame.font.init()
+        self.main_font = pygame.font.Font(pygame.font.get_default_font(), 16)
+
+    def text_display(self):
+        message = self.main_font.render(self.util.MSG, False, "white")
+        self.screen.blit(message, [16, 16])
+
+    def loading_display(self):
+        message = self.main_font.render(self.util.MSG2, False, "yellow", "black")
+        self.screen.blit(message, [16, self.util.WINDOW_SIZE - 32])
+        pygame.display.flip()
 
     def generate_background(self, colors, frame):
 
@@ -25,6 +36,6 @@ class View:
     def clear(self):
         self.screen.fill("black")
 
-    def draw_coffee(self, new_image):
-        pygame.image.save(new_image, "ch10/final_project/assets/new_image.jpg")
-        self.screen.blit(new_image, [0, 0])
+    def draw_coffee(self):
+        to_draw = pygame.image.load("ch10/final_project/assets/final_image.jpg")
+        self.screen.blit(to_draw, [0, 0])
