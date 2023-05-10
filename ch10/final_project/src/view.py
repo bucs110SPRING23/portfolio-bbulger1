@@ -1,5 +1,4 @@
 import pygame
-import random
 import src.utility as utility
 
 class View:
