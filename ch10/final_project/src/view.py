@@ -24,3 +24,7 @@ class View:
 
     def clear(self):
         self.screen.fill("black")
+
+    def draw_coffee(self, new_image):
+        pygame.image.save(new_image, "ch10/final_project/assets/new_image.jpg")
+        self.screen.blit(new_image, [0, 0])

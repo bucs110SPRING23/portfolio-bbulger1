@@ -1,4 +1,6 @@
 import pygame
+import faulthandler
+faulthandler.enable()
 import src.controller as controller
 
 # import your controller

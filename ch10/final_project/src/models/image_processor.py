@@ -1,9 +1,15 @@
-from PIL import Image
+import pygame
+import src.utility as utility
 
 class ImageProcessor():
     def __init__(self):
-        x = 1
+        self.util = utility.Utility()
+        
 
-    def image_processor(self, image):
-        pic = Image.open(image, "r")
-        pic.save("ch10/final_project/assets", "JPEG")
+    def coffee_resize(self):
+        image = pygame.image.load("ch10/final_project/assets/image.jpg")
+        new_image = pygame.transform.scale(image, [self.util.WINDOW_SIZE, self.util.WINDOW_SIZE])
+        return new_image
+
+    def image_processor(self, new_image):
+        x=1

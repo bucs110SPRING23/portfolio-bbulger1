@@ -8,6 +8,7 @@ import src.utility as utility
 
 class Controller:
     def __init__(self):
+        #module objects
         self.util = utility.Utility()
         self.coffee = coffee.Coffee()
         self.colormind = colormind_proxy.ColormindAPI()
@@ -15,6 +16,10 @@ class Controller:
         self.img = image_processor.ImageProcessor()
         self.frame = 0
         self.view = view.View()
+
+        #setup 
+        self.coffee.image()
+        self.new_image = self.img.coffee_resize()
 
     def mainloop(self):
         while 1:
@@ -24,10 +29,12 @@ class Controller:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     self.colors = self.colormind.return_colors()
-                    self.image = self.coffee.image()
+                    self.coffee.image()
+                    self.new_image = self.img.coffee_resize()
                     self.view.clear()
             self.frame += 1
             #self.view.generate_background(self.colors, self.frame)
-            self.view.generate_color(self.colors, self.frame)
+            #self.view.generate_color(self.colors, self.frame)
+            self.view.draw_coffee(self.new_image)
             pygame.display.flip()
             pygame.time.delay(self.util.FRAME_DELAY)

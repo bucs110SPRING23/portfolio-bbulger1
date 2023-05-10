@@ -18,8 +18,9 @@ class Coffee():
         print(fileurl)
         r = requests.get(fileurl, stream=True)
         print(r.raw)
-        with open(filename, "wb") as f:
-            shutil.copyfileobj(r.raw, f)
+        openfile = open(filename, "wb")
+        shutil.copyfileobj(r.raw, openfile)
+        return filename
     
 coffee = Coffee()
 coffee.image()
