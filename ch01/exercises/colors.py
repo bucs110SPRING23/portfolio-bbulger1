@@ -1,0 +1,11 @@
+mycolors = ["Red!", "Green!", "Blue!", "Aqua!", "Yellow!", "Pink!", "Grey!", "And the one that I'm forgetting!!!"]
+print("I have", len(mycolors), "colors!")
+print("My colors are...")
+print(mycolors[0])
+print(mycolors[1])
+print(mycolors[2])
+print(mycolors[3])
+print(mycolors[4])
+print(mycolors[5])
+print(mycolors[6])
+print(mycolors[7])

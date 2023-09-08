@@ -1,0 +1,13 @@
+print("Enter current exhcange rate for the Euro to US Dollar.")
+rate = input("€ 1 = $ ")
+rate = float(rate)
+print("Enter amount of Euros to convert.")
+amount = input("€ ")
+amount = float(amount)
+total = (rate * amount)
+total = round(total, 2)
+result = total - 3
+print("€", amount, "= $", total)
+print("- $ 3.00 transaction fee")
+print("= $", result)
+print("Thank you for your service :)")
